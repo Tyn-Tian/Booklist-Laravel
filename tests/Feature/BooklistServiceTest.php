@@ -62,4 +62,11 @@ class BooklistServiceTest extends TestCase
         self::assertIsArray($booklist);
         self::assertEquals([], $booklist);
     }
+
+    public function testRemoveBook()
+    {
+        $this->booklistService->saveBook("1", "Belajar Laravel Dasar");
+        $this->booklistService->removeBook("1");
+        self::assertEquals([], $this->booklistService->getBooklist());
+    }
 }
