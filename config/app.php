@@ -1,6 +1,8 @@
 <?php
 
+use App\Providers\BooklistServiceProvider;
 use App\Providers\UserServiceProvider;
+use App\Services\BooklistService;
 use Illuminate\Support\Facades\Facade;
 
 return [
@@ -177,7 +179,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        UserServiceProvider::class
+        UserServiceProvider::class,
+        BooklistServiceProvider::class
     ],
 
     /*
