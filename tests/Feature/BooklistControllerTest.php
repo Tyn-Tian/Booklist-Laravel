@@ -45,4 +45,17 @@ class BooklistControllerTest extends TestCase
         ])->post('/booklist')
             ->assertSeeText("Book is required");
     }
+
+    public function testRemoveBook() {
+        $this->withSession([
+            "user" => "Christian",
+            "booklist" => [
+                [
+                    "id" => "1",
+                    "book" => "Belajar Laravel Dasar"
+                ]
+            ]
+        ])->post('/booklist/1/delete')
+            ->assertRedirect('/booklist');
+    }
 }

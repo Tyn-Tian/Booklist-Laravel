@@ -41,7 +41,9 @@ class BooklistController extends Controller
         return redirect()->action([BooklistController::class, 'booklist']);
     }
 
-    public function removeBook(Request $request, string $bookId)
+    public function removeBook(Request $request, string $bookId): RedirectResponse
     {
+        $this->booklistService->removeBook($bookId);
+        return redirect()->action([BooklistController::class, 'booklist']);
     }
 }

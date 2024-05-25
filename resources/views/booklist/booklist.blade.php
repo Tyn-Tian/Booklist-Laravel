@@ -59,7 +59,10 @@
                             <th scope="row">{{$book['id']}}</th>
                             <td>{{$book['book']}}</td>
                             <td>
+                            <form action="/booklist/{{$book['id']}}/delete" method="post">
+                                @csrf
                                 <button class="w-100 btn btn-lg btn-danger" type="submit">Remove</button>
+                            </form>
                             </td>
                         </tr>
                         @endforeach
