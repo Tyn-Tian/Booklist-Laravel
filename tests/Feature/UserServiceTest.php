@@ -22,4 +22,19 @@ class UserServiceTest extends TestCase
     {
         self::assertTrue(true);
     }
+
+    public function testLoginSuccess()
+    {
+        self::assertTrue($this->userService->login("Christian", "rahasia"));
+    }
+
+    public function testLoginUserNotFount()
+    {
+        self::assertFalse($this->userService->login("notfound", "rahasia"));
+    }
+
+    public function testLoginWrongPassword()
+    {
+        self::assertFalse($this->userService->login("Christian", "wrong"));
+    }
 }
