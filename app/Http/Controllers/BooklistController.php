@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Services\BooklistService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -23,8 +24,21 @@ class BooklistController extends Controller
         ]);
     }
 
-    public function addBook(Request $request)
+    public function addBook(Request $request): RedirectResponse|Response
     {
+        $book = $request->input('book');
+
+        if (empty($book)) {
+            $booklist = $this->booklistService->getBooklist();
+            return response()->view('booklist.booklist', [
+                "title" => "Booklist",
+                "booklist" => $booklist,
+                "error" => "Book is required"
+            ]);
+        }
+
+        $this->booklistService->saveBook(uniqid(), $book);
+        return redirect()->action([BooklistController::class, 'booklist']);
     }
 
     public function removeBook(Request $request, string $bookId)

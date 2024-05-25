@@ -28,4 +28,21 @@ class BooklistControllerTest extends TestCase
             ->assertSeeText("2")
             ->assertSeeText("Belajar Laravel Dasar");
     }
+
+    public function testAddBookSuccess()
+    {
+        $this->withSession([
+            "user" => "Christian"
+        ])->post('/booklist', [
+            "book" => "Belajar Laravel Dasar"
+        ])->assertRedirect('/booklist');
+    }
+
+    public function testAddBookEmpty()
+    {
+        $this->withSession([
+            "user" => "Christian"
+        ])->post('/booklist')
+            ->assertSeeText("Book is required");
+    }
 }
