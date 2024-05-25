@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BooklistController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\OnlyGuestMiddleware;
@@ -25,4 +26,10 @@ Route::controller(UserController::class)->group(function() {
     Route::get('/login', 'login')->middleware(OnlyGuestMiddleware::class);
     Route::post('/login', 'doLogin')->middleware(OnlyGuestMiddleware::class);
     Route::post('/logout', 'doLogout')->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(BooklistController::class)->middleware(OnlyMemberMiddleware::class)->group(function() {
+    Route::get('/booklist', 'booklist');
+    Route::post('/booklist', 'addBook');
+    Route::post('/booklist/{id}/delete', 'removeBook');
 });
