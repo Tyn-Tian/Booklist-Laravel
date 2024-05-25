@@ -18,4 +18,9 @@ class BooklistServiceImpl implements BooklistService
             "book" => $book
         ]);
     }
+
+    public function getBooklist(): array
+    {
+        return Session::get("booklist", []);
+    }
 }

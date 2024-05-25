@@ -36,4 +36,30 @@ class BooklistServiceTest extends TestCase
             self::assertEquals("Belajar Laravel Dasar", $book["book"]);
         }
     }
+
+    public function testGetBooklist()
+    {
+        $expected = [
+            [
+                "id" => "1",
+                "book" => "Belajar PHP Dasar"
+            ],
+            [
+                "id" => "2",
+                "book" => "Belajar Laravel Dasar"
+            ],
+        ];
+
+        $this->booklistService->saveBook("1", "Belajar PHP Dasar");
+        $this->booklistService->saveBook("2", "Belajar Laravel Dasar");
+        self::assertEquals($expected, $this->booklistService->getBooklist());
+    }
+
+    public function testGetBooklistEmpty()
+    {
+        $booklist = $this->booklistService->getBooklist();
+
+        self::assertIsArray($booklist);
+        self::assertEquals([], $booklist);
+    }
 }
