@@ -2,6 +2,7 @@
 
 namespace App\Services\Impl;
 
+use App\Models\Book;
 use App\Services\BooklistService;
 use Illuminate\Support\Facades\Session;
 
@@ -9,32 +10,23 @@ class BooklistServiceImpl implements BooklistService
 {
     public function saveBook(string $id, string $book): void
     {
-        if (!Session::exists("booklist")) {
-            Session::put("booklist", []);
-        }
-
-        Session::push("booklist", [
+        $books = new Book([
             "id" => $id,
             "book" => $book
         ]);
+        $books->save();
     }
 
     public function getBooklist(): array
     {
-        return Session::get("booklist", []);
+        return Book::query()->get()->toArray();
     }
 
     public function removeBook(string $bookId): void
     {
-        $booklist = Session::get("booklist", []);
-
-        foreach ($booklist as $index => $book) {
-            if ($book["id"] == $bookId) {
-                unset($booklist[$index]);
-                break;
-            }
+        $books = Book::query()->find($bookId);
+        if ($books != null) {
+            $books->delete();
         }
-
-        Session::put("booklist", $booklist);
     }
 }
