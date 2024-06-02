@@ -25,24 +25,24 @@ class UserController extends Controller
 
     public function doLogin(Request $request): Response|RedirectResponse
     {
-        $user = $request->input("user");
+        $email = $request->input("email");
         $password = $request->input("password");
 
-        if (empty($user) || empty($password)) {
+        if (empty($email) || empty($password)) {
             return response()->view('user.login', [
                 "title" => "Login",
-                "error" => "User and password is required"
+                "error" => "Email and password is required"
             ]);
         }
 
-        if ($this->userService->login($user, $password)) {
-            $request->session()->put("user", $user);
+        if ($this->userService->login($email, $password)) {
+            $request->session()->put("user", $email);
             return redirect('/');
         }
 
         return response()->view('user.login', [
             "title" => "Login",
-            "error" => "User and password is wrong"
+            "error" => "Email and password is wrong"
         ]);
     }
 
